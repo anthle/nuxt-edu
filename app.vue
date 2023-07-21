@@ -1,5 +1,10 @@
+<script setup>
+</script>
+
 <template>
   <div>
-    <NuxtWelcome />
+    <h1 class="text-3xl font-bold underline text-blue-500">
+      Hello world!
+    </h1>
   </div>
 </template>

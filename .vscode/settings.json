@@ -1,0 +1,10 @@
+{
+  "cSpell.words": [
+    "antfu",
+    "nuxt",
+    "vueuc"
+  ],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}
