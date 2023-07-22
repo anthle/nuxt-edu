@@ -3,6 +3,6 @@
 
 <template>
   <div>
-    index
+    考试列表- {{ $route.params.page }}
   </div>
 </template>

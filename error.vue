@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NButton, NResult } from 'naive-ui'
 
-const props = defineProps({
+defineProps({
   error: Object,
 })
 const handleError = () => clearError({ redirect: '/' })

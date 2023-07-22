@@ -2,6 +2,7 @@
 import process from 'node:process'
 
 export default defineNuxtConfig({
+  css: ['@/assets/css/main.css'],
   devtools: { enabled: true },
   build: {
     transpile:
@@ -22,7 +23,6 @@ export default defineNuxtConfig({
           : [],
     },
   },
-  css: ['@/public/assets/css/main.css'],
   postcss: {
     plugins: {
       tailwindcss: {},

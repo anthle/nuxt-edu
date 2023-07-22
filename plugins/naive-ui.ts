@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { setup } from '@css-render/vue3-ssr'
 import { defineNuxtPlugin } from '#app'
 
