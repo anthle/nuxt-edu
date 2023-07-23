@@ -89,13 +89,13 @@ const route = useRoute()
 // 更改query的参数也能正常显示active
 function isMenuItemActive(item: MenusItem) {
   if (item.match) {
-    const i = item.match.findIndex((o) => {
+    const i = item.match.some((o) => {
       let res = true
       if (o.params && typeof o.params === 'object')
-        res = Object.keys(o.params).findIndex(k => (o.params as any)[k] === route.params[k]) !== -1
+        res = Object.keys(o.params).some(k => (o.params as any)[k] === route.params[k])
       return o.name === route.name && res
     })
-    return i !== -1
+    return i
   }
   return item.path === route.path
 }
