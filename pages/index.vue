@@ -1,6 +1,4 @@
 <script setup lang="ts">
-
-
 const { data, pending, error } = await useFetch('/index', {
   key: 'indexData',
   headers: {
@@ -13,10 +11,8 @@ const { data, pending, error } = await useFetch('/index', {
   lazy: true,
 })
 
-if (process.server && error.value){
-  console.log(error.value);
+if (process.server && error.value)
   throw createError(error.value?.data?.data)
-}
 </script>
 
 <template>
@@ -31,7 +27,10 @@ if (process.server && error.value){
     </template>
     <template v-else>
       <template v-for="item in data" :key="item.src">
-        <Banner :data="item.data" v-if="item.type === 'swiper'" />
+        <Banner v-if="item.type === 'swiper'" :data="item.data" />
+        <ImageNav v-if="item.type === 'icons'" :image-data="item.data" />
+        <ImageAd v-if="item.type === 'imageAd'" :image-ad-data="item.data" />
+        <CardList v-if="item.type === 'list'" :card-list-data="item" />
       </template>
     </template>
   </div>

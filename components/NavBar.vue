@@ -144,7 +144,7 @@ function handleOpen(path: string) {
 
 <style lang="postcss" scoped>
 .navbar {
-  @apply bg-white fixed top-0 left-0 right-0 drop-shadow
+  @apply bg-white fixed top-0 left-0 right-0 drop-shadow z-50
 }
 
 .menu {

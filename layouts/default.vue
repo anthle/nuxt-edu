@@ -4,7 +4,8 @@
 <template>
   <div class="body">
     <NavBar />
-    <main class="container text-center">
+
+    <main class="container">
       <slot />
     </main>
 

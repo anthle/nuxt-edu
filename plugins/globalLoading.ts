@@ -1,4 +1,3 @@
-import process from 'node:process'
 import { createDiscreteApi } from 'naive-ui'
 
 export default defineNuxtPlugin((nuxtApp) => {

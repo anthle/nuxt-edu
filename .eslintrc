@@ -1,6 +1,6 @@
 {
   "extends": "@antfu",
   "rules": {
-    "eslintn/prefer-global/process": false
+    "n/prefer-global/process": "off"
   }
 }
