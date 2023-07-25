@@ -1,6 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config'
-import process from 'node:process'
-
 export default defineNuxtConfig({
   css: ['@/assets/css/main.css'],
   devtools: { enabled: true },
