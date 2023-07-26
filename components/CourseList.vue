@@ -42,7 +42,9 @@ const props = defineProps<{
             {{ groupItemData.group_id ? '拼团中' : "秒杀中" }}
             <div class="ml-auto flex items-center">
               倒计时
-              <CountDown :time="groupItemData.end_time" />
+              <ClientOnly>
+                <CountDown :time="groupItemData.end_time" />
+              </ClientOnly>
             </div>
           </div>
         </template>

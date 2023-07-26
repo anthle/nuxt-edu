@@ -37,4 +37,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  imports: {
+    dirs: ['apis'],
+  },
 })

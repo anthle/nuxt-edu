@@ -16,15 +16,9 @@ const isGroup = ref(false)
 const pData = ref()
 if (props.type === 'group') {
   isGroup.value = true
-  const { data } = await useFetch('/group/list?page=1&usable=1', {
-    key: 'groupData',
-    headers: {
-      appid: 'bd9d01ecc75dbbaaefce',
-    },
-    baseURL: 'http://demonuxtapi.dishait.cn/pc',
-    transform: (res: any) => {
-      return res.data
-    },
+  const { data } = await useGroupDataApi({
+    page: 1,
+    usable: 1,
   })
   pData.value = data.value.rows
 }

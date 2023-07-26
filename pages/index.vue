@@ -3,17 +3,8 @@ useHead({
   title: '首页',
   titleTemplate: '',
 })
-const { data, pending, error } = await useFetch('/index', {
-  key: 'indexData',
-  headers: {
-    appid: 'bd9d01ecc75dbbaaefce',
-  },
-  baseURL: 'http://demonuxtapi.dishait.cn/pc',
-  transform: (res: any) => {
-    return res.data
-  },
-  lazy: true,
-})
+
+const { data, pending, error } = await useIndexDataApi()
 
 if (process.server && error.value)
   throw createError(error.value?.data?.data)
@@ -21,15 +12,7 @@ if (process.server && error.value)
 
 <template>
   <div>
-    <template v-if="pending">
-      加载中...
-    </template>
-    <template v-else-if="error">
-      <div>
-        {{ error?.data.data }}
-      </div>
-    </template>
-    <template v-else>
+    <LoadingGroup :pending="pending" :error="error">
       <template v-for="item in data" :key="item.src">
         <Banner v-if="item.type === 'swiper'" :data="item.data" />
         <ImageNav v-if="item.type === 'icons'" :image-data="item.data" />
@@ -37,6 +20,6 @@ if (process.server && error.value)
         <CardList v-if="item.type === 'promotion'" :card-list-data="item" type="group" />
         <CardList v-if="item.type === 'list'" :card-list-data="item" />
       </template>
-    </template>
+    </LoadingGroup>
   </div>
 </template>
