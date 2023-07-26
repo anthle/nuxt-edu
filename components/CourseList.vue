@@ -5,6 +5,7 @@ import type { GroupItemData, ItemData } from '@/components/CardList/types'
 const props = defineProps<{
   itemData?: ItemData
   groupItemData?: GroupItemData
+  pending?: boolean
 }>()
 </script>
 
