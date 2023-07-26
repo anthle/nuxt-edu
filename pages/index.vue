@@ -1,4 +1,8 @@
 <script setup lang="ts">
+useHead({
+  title: '首页',
+  titleTemplate: '',
+})
 const { data, pending, error } = await useFetch('/index', {
   key: 'indexData',
   headers: {

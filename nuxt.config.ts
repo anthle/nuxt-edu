@@ -1,6 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config'
 export default defineNuxtConfig({
   css: ['@/assets/css/main.css'],
+  app: {
+    head: {
+      titleTemplate: '%s - Messier64',
+      title: 'Messier',
+      charset: 'utf-8',
+      htmlAttrs: {
+        lang: 'zh-cn',
+      },
+    },
+  },
   devtools: { enabled: true },
   build: {
     transpile:
