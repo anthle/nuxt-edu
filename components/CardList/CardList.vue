@@ -35,7 +35,7 @@ if (props.type === 'group') {
     <NGrid x-gap="12" :cols="4">
       <template v-if="!isGroup">
         <NGi v-for="item in cardListData.data" :key="item.id">
-          <CourseList :item-data="item" />
+          <CourseList :recommend-or-latest-item-data="item" />
         </NGi>
       </template>
       <template v-else>

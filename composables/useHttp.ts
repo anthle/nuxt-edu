@@ -34,7 +34,7 @@ export async function useHttp(key: string, url: string, options: UseFetchOptions
 }
 
 // GET
-export function useHttpGet(key: string, url: string, options: UseFetchOptions<any> = {}) {
+export function useHttpGet(key: string, url: any, options: UseFetchOptions<any> = {}) {
   options.method = 'GET'
   return useHttp(key, url, options)
 }

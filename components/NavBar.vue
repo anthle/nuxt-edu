@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { NAvatar, NButton, NDropdown, NIcon } from 'naive-ui'
 import { Search } from '@vicons/ionicons5'
+import SearchBar from './SearchBar.vue'
 import type { MenusItem } from '@/components/Ui/types'
 
 const options = [
@@ -103,6 +104,12 @@ function isMenuItemActive(item: MenusItem) {
 function handleOpen(path: string) {
   navigateTo(path)
 }
+
+const searchBarRef = ref<InstanceType <typeof SearchBar>>()
+
+function openSearchBar() {
+  searchBarRef.value?.open()
+}
 </script>
 
 <template>
@@ -122,7 +129,7 @@ function handleOpen(path: string) {
       </UiMenu>
 
       <div class="ml-auto mr-3">
-        <NButton circle>
+        <NButton circle @click="openSearchBar()">
           <template #icon>
             <NIcon>
               <Search />
@@ -140,6 +147,8 @@ function handleOpen(path: string) {
     </div>
   </div>
   <div class="w-full h-20" />
+
+  <SearchBar ref="searchBarRef" />
 </template>
 
 <style lang="postcss" scoped>

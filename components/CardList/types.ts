@@ -1,6 +1,6 @@
 export interface CardListData {
   checked: boolean
-  data: ItemData[]
+  data: RecommendOrLatestItemData[]
   listType: string
   more: boolean
   showMore: boolean
@@ -8,7 +8,7 @@ export interface CardListData {
   type: string
 }
 
-export interface ItemData {
+export interface RecommendOrLatestItemData {
   content?: string
   cover: string
   created_time?: string

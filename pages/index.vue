@@ -5,6 +5,17 @@ useHead({
 })
 
 const { data, pending, error } = await useIndexDataApi()
+// const { data, pending, error } = await useFetch('/index', {
+//   key: 'indexData',
+//   headers: {
+//     appid: 'bd9d01ecc75dbbaaefce',
+//   },
+//   baseURL: 'http://demonuxtapi.dishait.cn/pc',
+//   transform: (res: any) => {
+//     return res.data
+//   },
+//   lazy: true,
+// })
 
 if (process.server && error.value)
   throw createError(error.value?.data?.data)

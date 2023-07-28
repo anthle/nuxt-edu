@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { NCard } from 'naive-ui'
-import type { GroupItemData, ItemData } from '@/components/CardList/types'
+import type { GroupItemData, RecommendOrLatestItemData } from '@/components/CardList/types'
 
 const props = defineProps<{
-  itemData?: ItemData
+  recommendOrLatestItemData?: RecommendOrLatestItemData
   groupItemData?: GroupItemData
   pending?: boolean
 }>()
@@ -11,17 +11,18 @@ const props = defineProps<{
 
 <template>
   <div class="mb-6">
-    <template v-if="itemData">
+    <template v-if="recommendOrLatestItemData">
       <NCard class=" cursor-pointer shadow-md !border-0 rounded" footer-style="padding:0">
         <template #cover>
-          <img class="w-full h-[150px]" :src="itemData.cover">
+          <!-- <img class="w-full h-[150px]" :src="recommendOrLatestItemData.cover"> -->
+          <UiImage class="w-full h-[150px]" :src="recommendOrLatestItemData.cover" />
         </template>
         <div class="pt-2">
-          <span class="font-semibold truncate w-full">{{ itemData.title }}</span>
+          <span class="font-semibold truncate w-full">{{ recommendOrLatestItemData.title }}</span>
         </div>
         <div class="mt-2 flex">
-          <Price :price="itemData.price" />
-          <Price :price="itemData.t_price" through />
+          <Price :price="recommendOrLatestItemData.price" />
+          <Price :price="recommendOrLatestItemData.t_price" through />
         </div>
       </NCard>
     </template>

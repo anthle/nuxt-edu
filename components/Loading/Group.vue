@@ -2,8 +2,8 @@
 import { NButton, NResult } from 'naive-ui'
 
 interface Props {
-  pending: boolean
-  error: any
+  pending?: boolean
+  error?: any
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -32,7 +32,9 @@ onBeforeUnmount(() => stop())
     <div>
       <template v-if="loading">
         <div>
-          <LoadingSkeleton />
+          <slot name="loading">
+            <LoadingSkeleton />
+          </slot>
         </div>
       </template>
       <template v-else-if="error">

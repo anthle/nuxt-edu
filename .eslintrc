@@ -2,6 +2,7 @@
   "extends": "@antfu",
   "rules": {
     "n/prefer-global/process": "off",
-    "curly":"off"
+    "curly":"off",
+    "no-console":"off"
   }
 }
