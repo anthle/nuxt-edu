@@ -1,10 +1,10 @@
-export async function usePagination(initListApiCallback: any) {
+export function usePagination(initListApiCallback: any) {
   const route = useRoute()
   const page = ref(Number.parseInt(route.params.page as string))
 
   const limit = ref(10)
 
-  const { data, pending, error, refresh } = await initListApiCallback({
+  const { data, pending, error, refresh } = initListApiCallback({
     page: page.value,
     limit: limit.value,
   })

@@ -13,16 +13,15 @@ function useFetchOption(options: UseFetchOptions<any>) {
     appid: config.headers.appid,
   }
   options.lazy = options.lazy ?? false
-
   // 用户登录 默认传token
   return options
 }
 
-export async function useHttp(key: string, url: string, options: UseFetchOptions<any> = {}) {
+export function useHttp(key: string, url: string, options: UseFetchOptions<any> = {}) {
   options = useFetchOption(options)
   options.key = key
 
-  const res = await useFetch(url, {
+  const res = useFetch(url, {
     ...options,
     // 相当于响应拦截器
     transform: (res: any) => {

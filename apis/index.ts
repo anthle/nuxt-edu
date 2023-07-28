@@ -1,5 +1,5 @@
 export function useIndexDataApi() {
-  return useHttp('indexData', '/index', {
+  return useHttpGet('indexData', '/index', {
     lazy: true,
   })
 }
