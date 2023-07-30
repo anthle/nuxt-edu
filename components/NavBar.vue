@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NAvatar, NButton, NDropdown, NIcon } from 'naive-ui'
+import { NButton, NIcon } from 'naive-ui'
 import { Search } from '@vicons/ionicons5'
 import SearchBar from './SearchBar.vue'
 import type { MenusItem } from '@/components/Ui/types'
@@ -138,12 +138,15 @@ function openSearchBar() {
         </NButton>
       </div>
 
-      <!-- <NButton strong secondary>
-        登录
-      </NButton> -->
-      <NDropdown trigger="hover" :options="options">
+      <NuxtLink to="/login">
+        <NButton strong secondary>
+          登录
+        </NButton>
+      </NuxtLink>
+
+      <!-- <NDropdown trigger="hover" :options="options">
         <NAvatar round size="small" src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" />
-      </NDropdown>
+      </NDropdown> -->
     </div>
   </div>
   <div class="w-full h-20" />
