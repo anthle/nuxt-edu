@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import type { FormInst, FormItemInst, FormItemRule, FormRules } from 'naive-ui'
-import { NButton, NForm, NFormItem, NInput, useMessage } from 'naive-ui'
+import { NButton, NForm, NFormItem, NInput, NInputGroup, useMessage } from 'naive-ui'
 
 interface ModelType {
-  username: string
+  phone: string
+  captcha: string
   password: string
   repassword: string
 }
 
 definePageMeta({
   layout: 'login',
-  title: '注册',
+  title: '重置密码',
   middleware: ['only-visitor'],
 })
 
-const title = ref('注册')
+const router = useRouter()
+const title = ref('重置密码')
 useHead({ title })
 
 const formRef = ref<FormInst | null>(null)
@@ -22,7 +24,8 @@ const rPasswordFormItemRef = ref<FormItemInst | null>(null)
 const message = useMessage()
 
 const formValue = ref<ModelType>({
-  username: '',
+  phone: '',
+  captcha: '',
   password: '',
   repassword: '',
 })
@@ -72,14 +75,22 @@ function handlePasswordInput() {
     rPasswordFormItemRef.value?.validate({ trigger: 'password-input' })
   }
 }
+
+const loading = ref(false)
 function handleValidateClick() {
   formRef.value?.validate(async (error) => {
     if (!error) {
-      const { data, error } = await useRegisterApi(formValue.value)
+      loading.value = true
+
+      const { data, error } = await useForgotApi(formValue.value)
+
+      loading.value = false
+
       if (error.value) return
 
-      message.success('注册成功')
-      navigateTo('/login', { replace: true })
+      message.success('重置密码成功')
+
+      router.go(-1)
     }
   })
 }
@@ -87,9 +98,16 @@ function handleValidateClick() {
 
 <template>
   <NForm ref="formRef" class="w-[340px]" :model="formValue" :rules="rules" size="large">
-    <NFormItem path="username" :show-label="false">
-      <NInput v-model:value="formValue.username" placeholder="用户名/手机/邮箱" />
+    <NFormItem path="phone" :show-label="false">
+      <NInput v-model:value="formValue.phone" placeholder="手机号" />
     </NFormItem>
+    <NFormItem path="captcha" :show-label="false">
+      <NInputGroup>
+        <NInput v-model:value="formValue.captcha" :style="{ width: '75%' }" placeholder="验证码" />
+        <SendCaptcha class="min-w-[111px]" :phone="formValue.phone" />
+      </NInputGroup>
+    </NFormItem>
+
     <NFormItem path="password" :show-label="false">
       <NInput v-model:value="formValue.password" show-password-on="click" placeholder="密码" type="password" @input="handlePasswordInput" @keydown.enter.prevent />
     </NFormItem>
@@ -102,24 +120,10 @@ function handleValidateClick() {
           回到登录
         </NButton>
       </NuxtLink>
-
-      <NButton type="primary" quaternary size="tiny">
-        忘记密码
-      </NButton>
     </div>
     <div>
       <NButton class="w-full" type="primary" attr-type="button" @click="handleValidateClick">
-        注册
-      </NButton>
-    </div>
-    <div class="flex justify-center items-center w-full text-gray-600 mt-5 text-xs">
-      注册即同意
-      <NButton quaternary type="primary" size="tiny">
-        《服务协议》
-      </NButton>
-      和
-      <NButton quaternary type="primary" size="tiny">
-        《隐私政策》
+        重置密码
       </NButton>
     </div>
   </NForm>

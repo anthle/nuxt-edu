@@ -4,6 +4,7 @@ import { NButton, NForm, NFormItem, NInput, useMessage } from 'naive-ui'
 
 definePageMeta({
   layout: 'login',
+  middleware: ['only-visitor'],
 })
 
 useHead({
@@ -73,9 +74,11 @@ function handleValidateClick() {
           注册
         </NButton>
       </NuxtLink>
-      <NButton type="primary" quaternary size="tiny">
-        忘记密码
-      </NButton>
+      <NuxtLink to="/forgot">
+        <NButton type="primary" quaternary size="tiny">
+          忘记密码?
+        </NButton>
+      </NuxtLink>
     </div>
     <div>
       <NButton class="w-full" type="primary" attr-type="button" :loading="loading" @click="handleValidateClick">

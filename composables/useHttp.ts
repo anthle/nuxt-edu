@@ -30,20 +30,6 @@ export async function useHttp(key: string, url: string, options: UseFetchOptions
   options = useFetchOption(options)
   options.key = key
 
-  // if (options.$) {
-  //   const data = ref(null)
-  //   const error = ref(null)
-  //   return await $fetch(url, options).then((res: any) => {
-  //     data.value = res.data
-  //     return {
-  //       data,
-  //       error,
-  //     }
-  //   }).catch((error) => {
-  //     console.log(error)
-  //   })
-  // }
-
   const res = await useFetch(url, {
     ...options,
     // 相当于响应拦截器

@@ -4,23 +4,7 @@ import { Search } from '@vicons/ionicons5'
 import SearchBar from './SearchBar.vue'
 import type { MenusItem } from '@/components/Ui/types'
 
-interface User {
-  avatar: string
-  created_time: string
-  desc: string
-  email: string
-  id: number
-  nickname: string
-  phone: string
-  sex: string
-  status: number
-  token: string
-  updated_time: string
-  username: string
-  weixin_unionid: string | null
-}
-
-const user: Ref<User | null> = useUser()
+const user = useUser()
 
 const options = [
   {
