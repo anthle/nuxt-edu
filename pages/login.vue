@@ -9,6 +9,7 @@ definePageMeta({
 useHead({
   title: '登录',
 })
+const route = useRoute()
 
 const formRef = ref<FormInst | null>(null)
 const message = useMessage()
@@ -27,14 +28,26 @@ const rules = {
   },
 }
 
+const loading = ref(false)
+const hasFrom = computed(() => route.params.from || '/')
 function handleValidateClick() {
-  formRef.value?.validate((error) => {
+  formRef.value?.validate(async (error) => {
     if (!error) {
-      message.success('注册成功')
-    }
-    else {
-      console.log(error)
-      // message.error('注册失败')
+      loading.value = true
+      const { data, error } = await useLoginApi(formValue.value)
+      loading.value = false
+      if (error.value) return
+
+      message.success('登录成功')
+
+      const token = useCookie('token')
+      token.value = data.value.token
+      const user = useUser()
+      user.value = data.value
+
+      setTimeout(() => {
+        navigateTo(`${hasFrom.value}`, { replace: true })
+      }, 500)
     }
   })
 }
@@ -52,7 +65,7 @@ function handleValidateClick() {
       <NInput v-model:value="formValue.username" placeholder="用户名/手机/邮箱" />
     </NFormItem>
     <NFormItem path="password" :show-label="false">
-      <NInput v-model:value="formValue.password" show-password-on="click" placeholder="密码" type="password" />
+      <NInput v-model:value="formValue.password" show-password-on="click" placeholder="密码" type="password" @keyup.enter="handleValidateClick" />
     </NFormItem>
     <div class="flex justify-between mb-4 text-green-500">
       <NuxtLink to="/register">
@@ -65,7 +78,7 @@ function handleValidateClick() {
       </NButton>
     </div>
     <div>
-      <NButton class="w-full" type="primary" attr-type="button" @click="handleValidateClick">
+      <NButton class="w-full" type="primary" attr-type="button" :loading="loading" @click="handleValidateClick">
         登录
       </NButton>
     </div>

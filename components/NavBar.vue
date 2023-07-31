@@ -1,8 +1,26 @@
 <script setup lang="ts">
-import { NButton, NIcon } from 'naive-ui'
+import { NAvatar, NButton, NDropdown, NIcon, createDiscreteApi } from 'naive-ui'
 import { Search } from '@vicons/ionicons5'
 import SearchBar from './SearchBar.vue'
 import type { MenusItem } from '@/components/Ui/types'
+
+interface User {
+  avatar: string
+  created_time: string
+  desc: string
+  email: string
+  id: number
+  nickname: string
+  phone: string
+  sex: string
+  status: number
+  token: string
+  updated_time: string
+  username: string
+  weixin_unionid: string | null
+}
+
+const user: Ref<User | null> = useUser()
 
 const options = [
   {
@@ -110,14 +128,30 @@ const searchBarRef = ref<InstanceType <typeof SearchBar>>()
 function openSearchBar() {
   searchBarRef.value?.open()
 }
+
+function handleSelect(k: string) {
+  if (k === 'logout') {
+    const { dialog } = createDiscreteApi(['dialog'])
+    dialog.warning({
+      content: '是否退出登录',
+      positiveText: '退出',
+      negativeText: '取消',
+      onPositiveClick: async () => {
+        await useLogout()
+      },
+    })
+  }
+}
 </script>
 
 <template>
   <div class="navbar">
     <div class="container flex items-center h-[60px]">
-      <NButton text class="text-xl font-bold">
-        Nuxt
-      </NButton>
+      <NuxtLink to="/">
+        <NButton text class="text-xl font-bold">
+          Nuxt
+        </NButton>
+      </NuxtLink>
 
       <UiMenu>
         <UiMenuItem
@@ -138,15 +172,15 @@ function openSearchBar() {
         </NButton>
       </div>
 
-      <NuxtLink to="/login">
+      <NuxtLink v-if="!user" to="/login">
         <NButton strong secondary>
           登录
         </NButton>
       </NuxtLink>
 
-      <!-- <NDropdown trigger="hover" :options="options">
-        <NAvatar round size="small" src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" />
-      </NDropdown> -->
+      <NDropdown v-else trigger="hover" :options="options" @select="handleSelect">
+        <NAvatar round size="small" :src="user.avatar || 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'" />
+      </NDropdown>
     </div>
   </div>
   <div class="w-full h-20" />

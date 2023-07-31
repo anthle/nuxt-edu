@@ -1,12 +1,12 @@
+interface Query {
+  page: number | Ref<number>
+  usable: number
+}
+
 export function useIndexDataApi() {
   return useHttpGet('indexData', '/index', {
     lazy: true,
   })
-}
-
-interface Query {
-  page: number | Ref<number>
-  usable: number
 }
 
 export function useGroupDataApi(query: Query) {

@@ -1,4 +1,5 @@
 import type { UseFetchOptions } from 'nuxt/app'
+import { createDiscreteApi } from 'naive-ui'
 
 const config = {
   headers: {
@@ -14,20 +15,50 @@ function useFetchOption(options: UseFetchOptions<any>) {
   }
   options.lazy = options.lazy ?? false
   // 用户登录 默认传token
+  const token = useCookie('token')
+  if (token.value && options.headers) {
+    options.headers = {
+      appid: config.headers.appid,
+      token: token.value,
+    }
+  }
+
   return options
 }
 
-export function useHttp(key: string, url: string, options: UseFetchOptions<any> = {}) {
+export async function useHttp(key: string, url: string, options: UseFetchOptions<any> = {}) {
   options = useFetchOption(options)
   options.key = key
 
-  const res = useFetch(url, {
+  // if (options.$) {
+  //   const data = ref(null)
+  //   const error = ref(null)
+  //   return await $fetch(url, options).then((res: any) => {
+  //     data.value = res.data
+  //     return {
+  //       data,
+  //       error,
+  //     }
+  //   }).catch((error) => {
+  //     console.log(error)
+  //   })
+  // }
+
+  const res = await useFetch(url, {
     ...options,
     // 相当于响应拦截器
     transform: (res: any) => {
       return res.data
     },
   })
+
+  if (process.client && res.error.value) {
+    const msg = res.error.value.data.data
+    if (!options.lazy) {
+      const { message } = createDiscreteApi(['message'])
+      message.error(msg || '服务端错误')
+    }
+  }
 
   return res
 }

@@ -3,6 +3,7 @@
   "rules": {
     "n/prefer-global/process": "off",
     "curly":"off",
-    "no-console":"off"
+    "no-console":"off",
+    "antfu/if-newline":"off"
   }
 }
