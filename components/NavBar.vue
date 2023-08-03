@@ -125,6 +125,9 @@ function handleSelect(k: string) {
       },
     })
   }
+  else {
+    navigateTo('/user/history/1')
+  }
 }
 </script>
 

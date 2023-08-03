@@ -49,7 +49,7 @@ export function useForgotApi(body: ForgotBody) {
   return useHttpPost('forgot', '/forgot', {
     body: {
       ...rest,
-      code: body.captcha,
+      code: captcha,
     },
   })
 }

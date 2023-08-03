@@ -8,7 +8,6 @@ export async function usePagination(initListApiCallback: any) {
     page: page.value,
     limit: limit.value,
   })
-  console.log(data)
   const rows = computed(() => data.value?.rows || [])
   const total = computed(() => data.value?.count || 0)
 
