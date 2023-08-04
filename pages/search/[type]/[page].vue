@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { NGi, NGrid, NPagination } from 'naive-ui'
+import type { PaginationParams } from '@/composables/types'
 
 definePageMeta({
   middleware: ['search'],
@@ -31,14 +32,12 @@ function handleChangeType(value: string) {
   })
 }
 
-interface PaginationParams { page: number; limit: number }
-
 const { page, limit, pending, error, refresh, rows, total, handlePageChange } = await usePagination((params: PaginationParams) => {
   return useSearchDataApi(() => {
     return {
       page: params.page,
       keyword: encodeURIComponent(title.value as string),
-      type: type.value,
+      type: type.value as string,
     }
   })
 })
@@ -61,7 +60,7 @@ watch(() => route.query.keyword, (newVal) => {
       </UiTabItem>
     </UiTab>
 
-    <LoadingGroup :pending="pending" :error="error" class="mt-5">
+    <LoadingGroup :pending="pending" :error="error" :is-empty="rows.length === 0" class="mt-5">
       <template #loading>
         <LoadingCourseSkeleton />
       </template>

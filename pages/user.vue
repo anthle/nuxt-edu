@@ -17,6 +17,7 @@ const menuOptions = [
   },
   {
     title: '购买记录',
+    name: 'user-purchase-page',
   },
   {
     title: '我的考试',
@@ -62,7 +63,7 @@ function navigate(name: string | undefined) {
         </ul>
       </NGridItem>
       <NGridItem :span="19">
-        <div class="bg-white rounded mb-10 min-h-[75vh]">
+        <div class="bg-white rounded mb-10">
           <NuxtPage :page-key="pageKey" />
         </div>
       </NGridItem>
@@ -72,7 +73,7 @@ function navigate(name: string | undefined) {
 
 <style lang="postcss" scoped>
 .center-menu{
-  @apply list-none bg-white rounded p-0 m-0
+  @apply list-none bg-white rounded-xl p-0 m-0
 }
 .center-menu li{
   @apply px-5 py-3 text-sm cursor-pointer hover:bg-blue-50

@@ -13,7 +13,7 @@ const handlePrice = computed(() => Number.parseFloat(props.price) === 0 ? 'å…è´
 </script>
 
 <template>
-  <div class="mt-2 flex items-center">
+  <div class="flex items-center">
     <span :class="!through ? 'text-rose-500 font-bold' : 'text-gray-500 line-through ml-2 text-xs'">{{ handlePrice }}</span>
   </div>
 </template>

@@ -4,11 +4,13 @@ import { NButton, NResult } from 'naive-ui'
 interface Props {
   pending?: boolean
   error?: any
+  isEmpty?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   pending: false,
   error: false,
+  isEmpty: false,
 })
 
 const loading = ref(false)
@@ -47,6 +49,9 @@ onBeforeUnmount(() => stop())
             </template>
           </NResult>
         </div>
+      </template>
+      <template v-else-if="isEmpty">
+        <Empty />
       </template>
       <template v-else>
         <slot />

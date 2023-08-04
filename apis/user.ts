@@ -1,4 +1,4 @@
-import type { BindPhoneBody, ForgotBody, LoginBody, RegisterBody } from './types'
+import type { BindPhoneBody, ForgotBody, LoginBody, RegisterBody, UserHistroyCallbackFunc } from './types'
 
 // 登录
 export function useLoginApi(body: LoginBody) {
@@ -51,5 +51,22 @@ export function useForgotApi(body: ForgotBody) {
       ...rest,
       code: captcha,
     },
+  })
+}
+
+// 获取学习记录数据
+
+export function useUserHistoryApi(query: UserHistroyCallbackFunc) {
+  const r = query()
+  const q = useQueryToString(r)
+  return useHttpGet('groupData', `/user_history/list${q}`, {
+    lazy: true,
+  })
+}
+
+// 获取购买记录
+export function useUserPurchaseHistoryApi(page: number) {
+  return useHttpGet('groupData', `/order/list?page=${page}`, {
+    lazy: true,
   })
 }

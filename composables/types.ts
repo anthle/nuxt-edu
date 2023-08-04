@@ -13,3 +13,5 @@ export interface User {
   username: string
   weixin_unionid: string | null
 }
+
+export interface PaginationParams { page: number; limit: number }

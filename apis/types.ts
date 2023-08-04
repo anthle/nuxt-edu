@@ -20,3 +20,15 @@ export interface ForgotBody {
   password: string
   repassword: string
 }
+
+export interface UserHistroyCallbackFunc {
+  (): {
+    page: number
+    type: string
+  }
+}
+export interface UserPurchaseHistroyCallbackFunc {
+  (): {
+    page: number
+  }
+}

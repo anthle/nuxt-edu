@@ -126,7 +126,7 @@ function handleSelect(k: string) {
     })
   }
   else {
-    navigateTo('/user/history/1')
+    navigateTo('/user/history/1?tab=course')
   }
 }
 </script>

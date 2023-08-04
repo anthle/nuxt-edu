@@ -12,7 +12,7 @@ const props = defineProps<{
 <template>
   <div class="mb-6">
     <template v-if="recommendOrLatestItemData">
-      <NCard class=" cursor-pointer shadow-md !border-0 rounded" footer-style="padding:0">
+      <NCard class="cursor-pointer shadow-md !border-0 rounded" footer-style="padding:0">
         <template #cover>
           <!-- <img class="w-full h-[150px]" :src="recommendOrLatestItemData.cover"> -->
           <UiImage class="w-full h-[150px]" :src="recommendOrLatestItemData.cover" />
