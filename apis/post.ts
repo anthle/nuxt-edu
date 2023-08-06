@@ -13,3 +13,12 @@ export function useUserLikeOrUnlikeApi(post_id: number, type = 'support') {
     },
   })
 }
+
+// 删除帖子
+export function useDeletePostApi(id: number) {
+  return useHttpPost('deletePost', '/post/delete', {
+    body: {
+      id,
+    },
+  })
+}
