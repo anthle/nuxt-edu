@@ -21,9 +21,11 @@ const menuOptions = [
   },
   {
     title: '我的考试',
+    name: 'user-test-page',
   },
   {
     title: '我的帖子',
+    name: 'user-post-page',
   },
   {
     title: '优惠券记录',

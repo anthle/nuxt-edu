@@ -64,9 +64,16 @@ export function useUserHistoryApi(query: UserHistroyCallbackFunc) {
   })
 }
 
-// 获取购买记录
+// 获取购买数据
 export function useUserPurchaseHistoryApi(page: number) {
-  return useHttpGet('groupData', `/order/list?page=${page}`, {
+  return useHttpGet('purchaseData', `/order/list?page=${page}`, {
+    lazy: true,
+  })
+}
+
+// 获取考试数据
+export function useUserTestHistoryApi(page: number) {
+  return useHttpGet('testData', `/user_test/list?page=${page}`, {
     lazy: true,
   })
 }
