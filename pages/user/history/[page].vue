@@ -51,7 +51,7 @@ const { page, limit, pending, error, refresh, rows, total, handlePageChange } = 
     <LoadingGroup :pending="pending" :error="error" :is-empty="rows.length === 0" class="mt-5">
       <!-- NPagination可选择是否置于底部 -->
       <div class="min-h-[74vh] flex flex-col justify-between">
-        <div>
+        <div class="px-3">
           <UserStudyHistoryList v-for="item in rows" :key="item.id" :study-history-list="item" />
         </div>
         <div class="flex items-center justify-center mt-5 pb-10">

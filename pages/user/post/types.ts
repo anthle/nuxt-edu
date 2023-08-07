@@ -1,4 +1,6 @@
-export type HandleDeletePostFn = (params: {
-  id: number
-  success: () => void }
-) => void
+export interface HandleDeletePostFn {
+  (params: {
+    id: number
+    success: () => void
+  }): void
+}

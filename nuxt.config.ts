@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config'
 export default defineNuxtConfig({
-  css: ['@/assets/css/main.css'],
   app: {
     head: {
       titleTemplate: '%s - Messier64',
@@ -31,13 +30,14 @@ export default defineNuxtConfig({
           : [],
     },
   },
+  imports: {
+    dirs: ['apis'],
+  },
+  css: ['@/assets/css/main.css'],
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
-  },
-  imports: {
-    dirs: ['apis'],
   },
 })

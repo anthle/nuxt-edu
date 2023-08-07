@@ -77,3 +77,10 @@ export function useUserTestHistoryApi(page: number) {
     lazy: true,
   })
 }
+
+// 获取优惠券数据
+export function useUserCouponApi(page: number) {
+  return useHttpGet('couponData', `/user_coupon?page=${page}`, {
+    lazy: true,
+  })
+}

@@ -29,6 +29,7 @@ const menuOptions = [
   },
   {
     title: '优惠券记录',
+    name: 'user-coupon-page',
   },
   {
     title: '我的收藏',
@@ -65,7 +66,7 @@ function navigate(name: string | undefined) {
         </ul>
       </NGridItem>
       <NGridItem :span="19">
-        <div class="bg-white rounded mb-10">
+        <div class="bg-white rounded mb-10 min-h-[75vh]">
           <NuxtPage :page-key="pageKey" />
         </div>
       </NGridItem>

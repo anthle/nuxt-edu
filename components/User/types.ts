@@ -67,3 +67,15 @@ export interface MyPostList {
   user: User
   issupport: boolean
 }
+
+// coupon page
+export interface couponData {
+  id: number
+  price: string
+  start_time: string
+  end_time: string
+  type: string
+  used: number
+  title: string
+  goods_id: number
+}
