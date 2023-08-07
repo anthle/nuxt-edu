@@ -51,7 +51,9 @@ onBeforeUnmount(() => stop())
         </div>
       </template>
       <template v-else-if="isEmpty">
-        <Empty />
+        <div class="h-[70vh] flex items-center justify-center">
+          <Empty />
+        </div>
       </template>
       <template v-else>
         <slot />

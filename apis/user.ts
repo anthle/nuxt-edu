@@ -84,3 +84,10 @@ export function useUserCouponApi(page: number) {
     lazy: true,
   })
 }
+
+// 获取我的收藏数据
+export function useUsercollectionApi(page: number) {
+  return useHttpGet('collectionData', `/user_fava?page=${page}`, {
+    lazy: true,
+  })
+}

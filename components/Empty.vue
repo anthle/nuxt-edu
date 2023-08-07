@@ -2,7 +2,7 @@
 import { NEmpty } from 'naive-ui'
 
 interface Props {
-  desc: string
+  desc?: string
 }
 const props = withDefaults(defineProps<Props>(), {
   desc: '暂无数据',

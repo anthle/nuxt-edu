@@ -79,3 +79,16 @@ export interface couponData {
   title: string
   goods_id: number
 }
+
+// collection page
+export interface collectionData {
+  id: number
+  type: string
+  goods: {
+    id: number
+    title: string
+    cover: string
+    try: string
+    type: string
+  }
+}

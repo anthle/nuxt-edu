@@ -33,6 +33,7 @@ const menuOptions = [
   },
   {
     title: '我的收藏',
+    name: 'user-collection-page',
   },
   {
     title: '修改资料',
@@ -60,7 +61,10 @@ function navigate(name: string | undefined) {
     <NGrid :x-gap="12" :y-gap="8">
       <NGridItem :span="5">
         <ul class="center-menu">
-          <li v-for="item in menuOptions" :key="item.title" :class="{ active: item.name === activeName }" @click="navigate(item.name)">
+          <li
+            v-for="item in menuOptions" :key="item.title" :class="{ active: item.name === activeName }"
+            @click="navigate(item.name)"
+          >
             {{ item.title }}
           </li>
         </ul>
@@ -75,14 +79,15 @@ function navigate(name: string | undefined) {
 </template>
 
 <style lang="postcss" scoped>
-.center-menu{
+.center-menu {
   @apply list-none bg-white rounded-xl p-0 m-0
 }
-.center-menu li{
+
+.center-menu li {
   @apply px-5 py-3 text-sm cursor-pointer hover:bg-blue-50
 }
 
-.center-menu .active{
+.center-menu .active {
   @apply font-bold text-blue-500 bg-gray-200
 }
 </style>
