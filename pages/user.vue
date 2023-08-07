@@ -37,6 +37,7 @@ const menuOptions = [
   },
   {
     title: '修改资料',
+    name: 'user-edit',
   },
   {
     title: '修改密码',
@@ -46,13 +47,20 @@ const menuOptions = [
   },
 ]
 
-function navigate(name: string | undefined) {
-  navigateTo({
-    name,
-    params: {
-      page: 1,
-    },
-  })
+async function navigate(name: string | undefined) {
+  if (name?.includes('page')) {
+    await navigateTo({
+      name,
+      params: {
+        page: 1,
+      },
+    })
+  }
+  else {
+    await navigateTo({
+      name,
+    })
+  }
 }
 </script>
 

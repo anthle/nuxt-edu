@@ -1,4 +1,4 @@
-import type { BindPhoneBody, ForgotBody, LoginBody, RegisterBody, UserHistroyCallbackFunc } from './types'
+import type { BindPhoneBody, ForgotBody, LoginBody, RegisterBody, UserHistroyCallbackFunc, updateUserInfoParams } from './types'
 
 // 登录
 export function useLoginApi(body: LoginBody) {
@@ -90,4 +90,23 @@ export function useUsercollectionApi(page: number) {
   return useHttpGet('collectionData', `/user_fava?page=${page}`, {
     lazy: true,
   })
+}
+
+// 修改个人资料
+export function useUpdateUserInfoApi(body: updateUserInfoParams) {
+  return useHttpPost('updateUserInfo', '/update_info', {
+    body,
+  })
+}
+
+// 上传图片
+export function useUploadConfig() {
+  const token = useCookie('token')
+  return {
+    action: `${fetchConfig.baseURL}/upload`,
+    headers: {
+      appid: fetchConfig.headers.appid,
+      token: token.value as string,
+    },
+  }
 }

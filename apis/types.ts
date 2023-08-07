@@ -32,3 +32,9 @@ export interface UserPurchaseHistroyCallbackFunc {
     page: number
   }
 }
+
+export interface updateUserInfoParams {
+  avatar: string
+  nickname: string
+  sex: '男' | '女' | '未知'
+}

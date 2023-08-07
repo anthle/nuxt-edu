@@ -1,7 +1,7 @@
 import type { UseFetchOptions } from 'nuxt/app'
 import { createDiscreteApi } from 'naive-ui'
 
-const config = {
+export const fetchConfig = {
   headers: {
     appid: 'bd9d01ecc75dbbaaefce',
   },
@@ -9,16 +9,16 @@ const config = {
 }
 
 function useFetchOption(options: UseFetchOptions<any>) {
-  options.baseURL = options.baseURL ?? config.baseURL
+  options.baseURL = options.baseURL ?? fetchConfig.baseURL
   options.headers = options.headers ?? {
-    appid: config.headers.appid,
+    appid: fetchConfig.headers.appid,
   }
   options.lazy = options.lazy ?? false
   // 用户登录 默认传token
   const token = useCookie('token')
   if (token.value && options.headers) {
     options.headers = {
-      appid: config.headers.appid,
+      appid: fetchConfig.headers.appid,
       token: token.value,
     }
   }
