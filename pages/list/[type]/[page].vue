@@ -2,7 +2,12 @@
 import { NBreadcrumb, NBreadcrumbItem, NGi, NGrid, NPagination } from 'naive-ui'
 import type { PaginationParams } from '@/composables/types'
 
-useHead({ title: '课程列表' })
+definePageMeta({
+  middleware: ['list'],
+})
+
+const route = useRoute()
+const title = route.meta.title
 
 const { page, limit, pending, error, refresh, rows, total, handlePageChange } = await usePagination(({ page, limit }: PaginationParams) => {
   return useGetCourseDataApi(page)
@@ -19,7 +24,7 @@ const { page, limit, pending, error, refresh, rows, total, handlePageChange } = 
           </NuxtLink>
         </NBreadcrumbItem>
         <NBreadcrumbItem>
-          课程列表
+          {{ title }}
         </NBreadcrumbItem>
       </NBreadcrumb>
     </div>

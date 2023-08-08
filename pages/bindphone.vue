@@ -29,7 +29,7 @@ const rules = {
 }
 
 const loading = ref(false)
-const hasFrom = computed(() => route.params.from || '/')
+const hasFrom = computed(() => route.query.from || '/')
 function handleValidateClick() {
   formRef.value?.validate(async (error) => {
     if (!error) {

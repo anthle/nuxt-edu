@@ -7,14 +7,18 @@ const props = defineProps<{
   groupItemData?: GroupItemData
   pending?: boolean
 }>()
+
+function toDetailPage() {
+  const id = props.recommendOrLatestItemData?.id || props.groupItemData?.id
+  navigateTo(`/detail/course/${id}`)
+}
 </script>
 
 <template>
   <div class="mb-6">
     <template v-if="recommendOrLatestItemData">
-      <NCard class="cursor-pointer shadow-md !border-0 rounded" footer-style="padding:0">
+      <NCard class="cursor-pointer shadow-md !border-0 rounded" footer-style="padding:0" @click="toDetailPage">
         <template #cover>
-          <!-- <img class="w-full h-[150px]" :src="recommendOrLatestItemData.cover"> -->
           <UiImage class="w-full h-[150px]" :src="recommendOrLatestItemData.cover" />
         </template>
         <div class="pt-2">
@@ -27,7 +31,7 @@ const props = defineProps<{
       </NCard>
     </template>
     <template v-if="groupItemData">
-      <NCard class=" cursor-pointer shadow-md !border-0 rounded" footer-style="padding:0">
+      <NCard class=" cursor-pointer shadow-md !border-0 rounded" footer-style="padding:0" @click="toDetailPage">
         <template #cover>
           <img class="w-full h-[150px]" :src="groupItemData.cover">
         </template>
