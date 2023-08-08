@@ -115,13 +115,14 @@ function openSearchBar() {
 
 function handleSelect(k: string) {
   if (k === 'logout') {
-    const { dialog } = createDiscreteApi(['dialog'])
+    const { dialog, message } = createDiscreteApi(['dialog', 'message'])
     dialog.warning({
       content: '是否退出登录',
       positiveText: '退出',
       negativeText: '取消',
       onPositiveClick: async () => {
         await useLogout()
+        message.success('退出登录成功')
       },
     })
   }

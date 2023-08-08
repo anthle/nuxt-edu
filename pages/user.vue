@@ -41,9 +41,11 @@ const menuOptions = [
   },
   {
     title: '修改密码',
+    name: 'user-password',
   },
   {
     title: '其他设置',
+    name: 'user-other',
   },
 ]
 

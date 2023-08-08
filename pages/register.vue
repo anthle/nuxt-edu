@@ -59,8 +59,8 @@ const rules: FormRules = {
 
 function validatePasswordStartWith(rule: FormItemRule, value: string): boolean {
   return !!formValue.value.password
-        && formValue.value.password.startsWith(value)
-        && formValue.value.password.length >= value.length
+    && formValue.value.password.startsWith(value)
+    && formValue.value.password.length >= value.length
 }
 
 function validatePasswordSame(rule: FormItemRule, value: string): boolean {
@@ -91,10 +91,12 @@ function handleValidateClick() {
       <NInput v-model:value="formValue.username" placeholder="用户名/手机/邮箱" />
     </NFormItem>
     <NFormItem path="password" :show-label="false">
-      <NInput v-model:value="formValue.password" show-password-on="click" placeholder="密码" type="password" @input="handlePasswordInput" @keydown.enter.prevent />
+      <NInput v-model:value="formValue.password" show-password-on="click" placeholder="密码" type="password"
+        @input="handlePasswordInput" @keydown.enter.prevent />
     </NFormItem>
     <NFormItem ref="rPasswordFormItemRef" first path="repassword" :show-label="false">
-      <NInput v-model:value="formValue.repassword" :disabled="!formValue.password" show-password-on="click" placeholder="确认密码" type="password" @keyup.enter="handleValidateClick" @keydown.enter.prevent />
+      <NInput v-model:value="formValue.repassword" :disabled="!formValue.password" show-password-on="click"
+        placeholder="确认密码" type="password" @keyup.enter="handleValidateClick" @keydown.enter.prevent />
     </NFormItem>
     <div class="flex justify-between mb-4 text-green-500">
       <NuxtLink to="/login">

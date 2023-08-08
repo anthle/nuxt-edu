@@ -1,4 +1,4 @@
-import type { BindPhoneBody, ForgotBody, LoginBody, RegisterBody, UserHistroyCallbackFunc, updateUserInfoParams } from './types'
+import type { BindPhoneBody, ForgotBody, LoginBody, RegisterBody, UpdatePassword, UpdateUserInfoParams, UserHistroyCallbackFunc } from './types'
 
 // 登录
 export function useLoginApi(body: LoginBody) {
@@ -43,7 +43,7 @@ export function usebindMobileApi(body: BindPhoneBody) {
   })
 }
 
-// 绑定手机号
+// 忘记密码
 export function useForgotApi(body: ForgotBody) {
   const { captcha, ...rest } = body
   return useHttpPost('forgot', '/forgot', {
@@ -93,7 +93,7 @@ export function useUsercollectionApi(page: number) {
 }
 
 // 修改个人资料
-export function useUpdateUserInfoApi(body: updateUserInfoParams) {
+export function useUpdateUserInfoApi(body: UpdateUserInfoParams) {
   return useHttpPost('updateUserInfo', '/update_info', {
     body,
   })
@@ -109,4 +109,11 @@ export function useUploadConfig() {
       token: token.value as string,
     },
   }
+}
+
+// 修改密码
+export function useUpdatePasswordApi(body: UpdatePassword) {
+  return useHttpPost('updatePassword', '/update_password', {
+    body,
+  })
 }

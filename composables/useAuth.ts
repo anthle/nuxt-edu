@@ -25,8 +25,6 @@ export async function useLogout() {
   user.value = null
   const token = useCookie('token')
   token.value = null
-  const { message } = createDiscreteApi(['message'])
-  message.success('退出登录成功')
 
   const route = useRoute()
   if (route.path !== '/') {

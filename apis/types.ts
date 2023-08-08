@@ -33,8 +33,15 @@ export interface UserPurchaseHistroyCallbackFunc {
   }
 }
 
-export interface updateUserInfoParams {
+export interface UpdateUserInfoParams {
   avatar: string
   nickname: string
   sex: '男' | '女' | '未知'
+}
+
+// password page
+export interface UpdatePassword {
+  opassword: string
+  password: string
+  repassword: string
 }

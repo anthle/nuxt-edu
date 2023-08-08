@@ -31,6 +31,7 @@ function handleError(e: any) {
   const { message } = createDiscreteApi(['message'])
   message.error('上传失败')
 }
+
 function handleSuccess(e: any) {
   const { file, event } = e
   const response = JSON.parse(event.target.response)
@@ -39,7 +40,7 @@ function handleSuccess(e: any) {
 }
 
 // 监听filelist的变化
-const stop = watch(() => fileList, (newvalue) => {
+const stop = watch(() => fileList, () => {
   updateModelValue()
 }, {
   deep: true,
