@@ -4,8 +4,8 @@ import type { PaginationParams } from '@/composables/types'
 
 useHead({ title: '优惠券记录' })
 
-const { page, limit, pending, error, refresh, rows, total, handlePageChange } = await usePagination((params: PaginationParams) => {
-  return useUserCouponApi(params.page)
+const { page, limit, pending, error, refresh, rows, total, handlePageChange } = await usePagination(({ page, limit }: PaginationParams) => {
+  return useUserCouponApi(page)
 })
 </script>
 

@@ -1,8 +1,40 @@
 <script setup lang="ts">
+import { NBreadcrumb, NBreadcrumbItem, NGi, NGrid, NPagination } from 'naive-ui'
+import type { PaginationParams } from '@/composables/types'
+
+useHead({ title: '课程列表' })
+
+const { page, limit, pending, error, refresh, rows, total, handlePageChange } = await usePagination(({ page, limit }: PaginationParams) => {
+  return useGetCourseDataApi(page)
+})
 </script>
 
 <template>
   <div>
-    公共列表 - {{ $route.params.type }} - {{ $route.params.page }}
+    <div>
+      <NBreadcrumb>
+        <NBreadcrumbItem>
+          <NuxtLink to="/">
+            首页
+          </NuxtLink>
+        </NBreadcrumbItem>
+        <NBreadcrumbItem>
+          课程列表
+        </NBreadcrumbItem>
+      </NBreadcrumb>
+    </div>
+    <LoadingGroup :pending="pending" :error="error" :is-empty="rows.length === 0" class="mt-5">
+      <template #loading>
+        <LoadingCourseSkeleton />
+      </template>
+      <NGrid x-gap="12" :cols="4">
+        <NGi v-for="item in rows" :key="item.id">
+          <CourseList :recommend-or-latest-item-data="item" />
+        </NGi>
+      </NGrid>
+      <div class="flex items-center justify-center mt-5 mb-10">
+        <NPagination v-model:page="page" :item-count="total" :page-size="limit" :on-update:page="handlePageChange" />
+      </div>
+    </LoadingGroup>
   </div>
 </template>

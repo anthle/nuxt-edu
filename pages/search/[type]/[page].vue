@@ -32,10 +32,10 @@ function handleChangeType(value: string) {
   })
 }
 
-const { page, limit, pending, error, refresh, rows, total, handlePageChange } = await usePagination((params: PaginationParams) => {
+const { page, limit, pending, error, refresh, rows, total, handlePageChange } = await usePagination(({ page, limit }: PaginationParams) => {
   return useSearchDataApi(() => {
     return {
-      page: params.page,
+      page,
       keyword: encodeURIComponent(title.value as string),
       type: type.value as string,
     }

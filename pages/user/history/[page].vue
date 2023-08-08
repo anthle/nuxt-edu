@@ -30,10 +30,10 @@ function handleChangeType(value: string) {
 
 interface PaginationParams { page: number; limit: number }
 
-const { page, limit, pending, error, refresh, rows, total, handlePageChange } = await usePagination((params: PaginationParams) => {
+const { page, limit, pending, error, refresh, rows, total, handlePageChange } = await usePagination(({ page, limit }: PaginationParams) => {
   return useUserHistoryApi(() => {
     return {
-      page: params.page,
+      page,
       type: type.value as string,
     }
   })

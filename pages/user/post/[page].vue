@@ -11,8 +11,8 @@ interface HandleDeletePostFn {
 
 useHead({ title: '我的帖子' })
 
-const { page, limit, pending, error, refresh, rows, total, handlePageChange } = await usePagination((params: PaginationParams) => {
-  return useUserPostApi(params.page)
+const { page, limit, pending, error, refresh, rows, total, handlePageChange } = await usePagination(({ page, limit }: PaginationParams) => {
+  return useUserPostApi(page)
 })
 
 const handleDeletePost: HandleDeletePostFn = async ({ id, success }) => {
