@@ -63,6 +63,9 @@ function purchaseCourse() {
           <Price :price="data.price" class="text-xl" />
           <Price :price="data.t_price" through class="text-xs" />
         </div>
+        <div class="my-2">
+          <CouponModal />
+        </div>
         <div v-if="!data.isbuy" class="mt-auto">
           <NButton type="primary" @click="purchaseCourse">
             立即学习

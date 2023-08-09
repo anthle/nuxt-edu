@@ -15,7 +15,7 @@ const { page, limit, pending, error, refresh, rows, total, handlePageChange } = 
       <div class="p-3">
         <NGrid :x-gap="20" :cols="2">
           <NGi v-for="item in rows" :key="item.id">
-            <UserCouponList :coupon="item" />
+            <UserCouponUser :coupon="item" />
           </NGi>
         </NGrid>
       </div>

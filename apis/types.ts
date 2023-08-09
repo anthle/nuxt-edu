@@ -45,3 +45,8 @@ export interface UpdatePassword {
   password: string
   repassword: string
 }
+
+// GetCoupons
+export interface GetCoupons {
+  coupon_id: number
+}
