@@ -5,8 +5,6 @@ import type { Coupon } from './types'
 const props = defineProps<{
   coupon: Coupon
 }>()
-console.log(props.coupon)
-
 const loading = ref(false)
 
 const isCourse = computed(() => {

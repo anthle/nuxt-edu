@@ -1,19 +1,21 @@
 <script setup lang="ts">
+import type { MenuData } from 'components/DetailMenu/types'
 import type { AnyObject } from 'globalTypes'
-import { NButton, NGi, NGrid, NImage } from 'naive-ui'
-
-const props = defineProps<{
-  modelValue?: boolean
-}>()
+import { NButton, NGi, NGrid, NImage, createDiscreteApi } from 'naive-ui'
+import type { LocationQueryValue } from '.nuxt/vue-router'
 
 const route = useRoute()
 const type = route.params.type
 
 const id = Number(route.params.id)
 
-const { data, pending, error, refresh } = await useGetCourseDetailDataApi({ id })
+const query = requestQuery()
+
+const { data, pending, error, refresh } = await useGetContentDetailDataApi(type as 'course' | 'column' | 'book', query)
 
 const title = computed(() => !pending.value ? data.value.title : '详情页')
+
+useHead({ title })
 
 const typeMap: AnyObject = {
   media: '图文',
@@ -43,6 +45,54 @@ function purchaseCourse() {
       })
       if (!error.value) refresh()
     }
+  })
+}
+
+const activeTab = ref('detail')
+
+const tabMap = [
+  {
+    label: '详情',
+    value: 'detail',
+  },
+]
+
+if (type === 'book' || type === 'column') {
+  tabMap.push({
+    label: '目录',
+    value: 'menu',
+  })
+}
+
+function handleChangeType(type: string) {
+  activeTab.value = type
+}
+
+function requestQuery() {
+  const { column_id } = route.query
+  const query: { id: number; column_id?: LocationQueryValue | LocationQueryValue[] } = {
+    id,
+  }
+
+  if (column_id) {
+    query.column_id = column_id
+  }
+  return query
+}
+
+function menuToStudyPage(menuData: MenuData) {
+  useHasAuth(() => {
+    const { message } = createDiscreteApi(['message'])
+    if (type === 'column' && Number.parseInt(data.value.price) !== 0 && !data.value.isbuy) {
+      return message.error('请先购买该专栏')
+    }
+
+    let url = ''
+    if (type === 'column') {
+      console.log(menuData.id, data.value.id)
+      url = `/detail/course/${menuData.id}?column_id=${data.value.id}`
+    }
+    navigateTo(url)
   })
 }
 </script>
@@ -79,13 +129,16 @@ function purchaseCourse() {
           <section class="bg-white rounded mb-5">
             <div class="border-b border-solid border-gray-200 border-0">
               <UiTab>
-                <UiTabItem active>
-                  详情
+                <UiTabItem v-for="item in tabMap" :key="item.value" :active="item.value === activeTab" @click="handleChangeType(item.value)">
+                  {{ item.label }}
                 </UiTabItem>
               </UiTab>
             </div>
 
-            <div class="content px-5" v-html="hasPurchasedCourse" />
+            <div v-if="activeTab === 'detail'" class="content px-5" v-html="hasPurchasedCourse" />
+            <DetailMenuList v-else>
+              <DetailMenu v-for="(item, index) in data.column_courses" :key="item.id" :menu-data="item" :index="index" @click="menuToStudyPage(item)" />
+            </DetailMenuList>
           </section>
         </NGi>
         <NGi :span="6">

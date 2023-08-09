@@ -10,7 +10,7 @@ const route = useRoute()
 const title = route.meta.title
 
 const { page, limit, pending, error, refresh, rows, total, handlePageChange } = await usePagination(({ page, limit }: PaginationParams) => {
-  return useGetCourseDataApi(page)
+  return useContentListDataApi(route.params.type as 'column' | 'course' | 'book', page)
 })
 </script>
 

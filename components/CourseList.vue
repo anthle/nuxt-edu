@@ -8,9 +8,11 @@ const props = defineProps<{
   pending?: boolean
 }>()
 
+const route = useRoute()
+
 function toDetailPage() {
   const id = props.recommendOrLatestItemData?.id || props.groupItemData?.id
-  navigateTo(`/detail/course/${id}`)
+  navigateTo(`/detail/${route.params.type}/${id}`)
 }
 </script>
 

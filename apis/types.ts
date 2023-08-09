@@ -1,3 +1,5 @@
+import type { LocationQueryValue } from '.nuxt/vue-router'
+
 export interface LoginBody {
   username: string
   password: string
@@ -33,6 +35,11 @@ export interface UserPurchaseHistroyCallbackFunc {
   }
 }
 
+export interface PurchaseCurserParams {
+  goods_id: number
+  type: 'course' | 'column' | 'book'
+}
+
 export interface UpdateUserInfoParams {
   avatar: string
   nickname: string
@@ -50,3 +57,11 @@ export interface UpdatePassword {
 export interface GetCoupons {
   coupon_id: number
 }
+
+// 通用接口
+export interface GetContentDetail {
+  id: number
+  column_id?: LocationQueryValue | LocationQueryValue[]
+}
+
+export type contentType = 'column' | 'course' | 'book'
