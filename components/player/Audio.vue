@@ -5,9 +5,9 @@ const props = defineProps<{
   url?: string
 }>()
 
-let ap = ref(null)
+const ap = ref(null)
 onMounted(() => {
-  ap = new APlayer({
+  ap.value = new APlayer({
     container: document.getElementById('aplayer'),
     audio: [{
       name: props.title,
