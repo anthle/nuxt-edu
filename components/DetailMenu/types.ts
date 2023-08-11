@@ -3,4 +3,5 @@ export interface MenuData {
   price: string
   title: string
   type: string
+  isfree?: number
 }

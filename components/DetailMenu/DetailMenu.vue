@@ -6,7 +6,9 @@ import type { MenuData } from './types'
 const props = defineProps<{
   menuData: MenuData
   index: number
+  active?: boolean
 }>()
+console.log(props.active)
 
 const typeMap: AnyObject = {
   media: '图文',
@@ -18,8 +20,8 @@ const price = computed(() => Number.parseInt(props.menuData.price))
 </script>
 
 <template>
-  <li class="flex p-5 hover:bg-gray-100 border-0 border-solid border-gray-200 border-b cursor-pointer text-sm">
-    <NTag type="info" size="small" :bordered="false">
+  <li class="flex p-5 hover:bg-gray-100 border-0 border-solid border-gray-200 border-b cursor-pointer text-sm" :class="{ 'bg-gray-200': active }">
+    <NTag v-if="menuData.type" type="info" size="small" :bordered="false">
       {{ typeMap[menuData.type as keyof AnyObject] }}
     </NTag>
     <div class="ml-2">
@@ -27,7 +29,7 @@ const price = computed(() => Number.parseInt(props.menuData.price))
       <span class="ml-2">{{ menuData.title }}</span>
     </div>
     <div class="ml-auto">
-      <NTag v-if="price === 0" type="success" :bordered="false" size="small">
+      <NTag v-if="price === 0 || menuData.isfree === 1" type="success" :bordered="false" size="small">
         免费
       </NTag>
     </div>

@@ -6,9 +6,7 @@ import type { LocationQueryValue } from '.nuxt/vue-router'
 
 const route = useRoute()
 const type = route.params.type
-
 const id = Number(route.params.id)
-
 const query = requestQuery()
 
 const { data, pending, error, refresh } = await useGetContentDetailDataApi(type as 'course' | 'column' | 'book', query)
@@ -80,7 +78,19 @@ function requestQuery() {
   return query
 }
 
-function menuToStudyPage(menuData: MenuData) {
+const freeChapterList = computed(() => {
+  const fcl: number[] = []
+  if (type === 'book') {
+    data.value.book_details.forEach((item: any) => {
+      if (item.isfree === 1) {
+        fcl.push(item.id)
+      }
+    })
+  }
+  return fcl
+})
+
+function menuToStudyPage(menuData?: MenuData) {
   useHasAuth(() => {
     const { message } = createDiscreteApi(['message'])
     if (type === 'column' && Number.parseInt(data.value.price) !== 0 && !data.value.isbuy) {
@@ -89,18 +99,26 @@ function menuToStudyPage(menuData: MenuData) {
 
     let url = ''
     if (type === 'column') {
-      console.log(menuData.id, data.value.id)
-      url = `/detail/course/${menuData.id}?column_id=${data.value.id}`
+      url = `/detail/course/${menuData?.id}?column_id=${data.value.id}`
+    }
+    else if (type === 'book') {
+      url = `/book/${data.value.id}/${freeChapterList.value[0]}`
     }
     navigateTo(url)
   })
 }
+
+const isBookStyle = computed(() => {
+  return type === 'book' ? 'w-[130px] h-[180px] rounded mr-5 ml-3' : 'w-[340px] h-[200px] rounded mr-5'
+})
+
+const menuType = computed(() => type === 'book' ? data.value.book_details : data.value.column_courses)
 </script>
 
 <template>
   <LoadingGroup :pending="pending" :error="error">
     <section class="mt-5 bg-white border flex p-5 mb-5 rounded">
-      <NImage :src="data.cover" object-fit="cover" class="w-[340px] h-[200px] rounded mr-5" />
+      <NImage :src="data.cover" object-fit="cover" :class="isBookStyle" />
       <div class="flex flex-col justify-start ml-5 p-2">
         <div class="text-xl flex items-center">
           {{ data.title }}
@@ -117,7 +135,20 @@ function menuToStudyPage(menuData: MenuData) {
           <CouponModal />
         </div>
         <div v-if="!data.isbuy" class="mt-auto">
-          <NButton type="primary" @click="purchaseCourse">
+          <template v-if="type === 'book'">
+            <template v-if="menuType.length > 0">
+              <NButton type="primary" @click="purchaseCourse">
+                立即学习
+              </NButton>
+              <NButton v-if="freeChapterList.length > 0" class="ml-2" strong secondary type="primary" @click="menuToStudyPage()">
+                免费试看
+              </NButton>
+            </template>
+            <NButton v-else strong secondary type="primary" @click="purchaseCourse">
+              敬请期待
+            </NButton>
+          </template>
+          <NButton v-else type="primary" @click="purchaseCourse">
             立即学习
           </NButton>
         </div>
@@ -129,7 +160,10 @@ function menuToStudyPage(menuData: MenuData) {
           <section class="bg-white rounded mb-5">
             <div class="border-b border-solid border-gray-200 border-0">
               <UiTab>
-                <UiTabItem v-for="item in tabMap" :key="item.value" :active="item.value === activeTab" @click="handleChangeType(item.value)">
+                <UiTabItem
+                  v-for="item in tabMap" :key="item.value" :active="item.value === activeTab"
+                  @click="handleChangeType(item.value)"
+                >
                   {{ item.label }}
                 </UiTabItem>
               </UiTab>
@@ -137,7 +171,15 @@ function menuToStudyPage(menuData: MenuData) {
 
             <div v-if="activeTab === 'detail'" class="content px-5" v-html="hasPurchasedCourse" />
             <DetailMenuList v-else>
-              <DetailMenu v-for="(item, index) in data.column_courses" :key="item.id" :menu-data="item" :index="index" @click="menuToStudyPage(item)" />
+              <template v-if="menuType.length > 0">
+                <DetailMenu
+                  v-for="(item, index) in menuType" :key="item.id" :menu-data="item" :index="index"
+                  @click="menuToStudyPage(item)"
+                />
+              </template>
+              <template v-else>
+                <Empty class="py-10" />
+              </template>
             </DetailMenuList>
           </section>
         </NGi>

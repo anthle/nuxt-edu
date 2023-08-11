@@ -8,6 +8,7 @@ definePageMeta({
 
 const route = useRoute()
 const title = route.meta.title
+const type = route.params.type
 
 const { page, limit, pending, error, refresh, rows, total, handlePageChange } = await usePagination(({ page, limit }: PaginationParams) => {
   return useContentListDataApi(route.params.type as 'column' | 'course' | 'book', page)
@@ -30,11 +31,13 @@ const { page, limit, pending, error, refresh, rows, total, handlePageChange } = 
     </div>
     <LoadingGroup :pending="pending" :error="error" :is-empty="rows.length === 0" class="mt-5">
       <template #loading>
-        <LoadingCourseSkeleton />
+        <LoadingBookSkeleton v-if="type === 'book'" />
+        <LoadingCourseSkeleton v-else />
       </template>
-      <NGrid x-gap="12" :cols="4">
+      <NGrid x-gap="12" :cols="type === 'book' ? 2 : 4">
         <NGi v-for="item in rows" :key="item.id">
-          <CourseList :recommend-or-latest-item-data="item" />
+          <BookList v-if="type === 'book'" :book-data="item" />
+          <CourseList v-else :recommend-or-latest-item-data="item" />
         </NGi>
       </NGrid>
       <div class="flex items-center justify-center mt-5 mb-10">
