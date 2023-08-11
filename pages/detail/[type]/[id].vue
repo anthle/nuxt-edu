@@ -9,6 +9,8 @@ const type = route.params.type
 const id = Number(route.params.id)
 const query = requestQuery()
 
+initHeader()
+
 const { data, pending, error, refresh } = await useGetContentDetailDataApi(type as 'course' | 'column' | 'book', query)
 
 const title = computed(() => !pending.value ? data.value.title : '详情页')
@@ -113,16 +115,41 @@ const isBookStyle = computed(() => {
 })
 
 const menuType = computed(() => type === 'book' ? data.value.book_details : data.value.column_courses)
+
+function initHeader() {
+  if (type === 'course') {
+    useHead({
+      link: [{
+        rel: 'stylesheet',
+        href: '/aplayer/APlayer.min.css',
+      }],
+      script: [{
+        src: '/aplayer/APlayer.min.js',
+      }],
+    })
+  }
+}
 </script>
 
 <template>
   <LoadingGroup :pending="pending" :error="error">
-    <section class="mt-5 bg-white border flex p-5 mb-5 rounded">
+    <section v-if="data.isbuy && (data.type !== 'media' && type === 'course')" class="py-4">
+      <ClientOnly>
+        <template #fallback>
+          <LoadingAudioSkeleton />
+        </template>
+        <PlayerAudio v-if="data.type === 'audio'" :title="data.title" :cover="data.cover" :url="data.content" />
+      </ClientOnly>
+    </section>
+    <section v-else class="mt-5 bg-white border flex p-5 mb-5 rounded">
       <NImage :src="data.cover" object-fit="cover" :class="isBookStyle" />
       <div class="flex flex-col justify-start ml-5 p-2">
         <div class="text-xl flex items-center">
           {{ data.title }}
-          <CollectionBtn class="ml-2" :is-collection="data.isfava" :goods_id="data.id" :content-type="type as string" />
+          <CollectionBtn
+            class="ml-2" :is-collection="data.isfava" :goods_id="data.id"
+            :content-type="type as string"
+          />
         </div>
         <p class="text-xs text-gray-400">
           {{ subTitle }}
@@ -140,7 +167,10 @@ const menuType = computed(() => type === 'book' ? data.value.book_details : data
               <NButton type="primary" @click="purchaseCourse">
                 立即学习
               </NButton>
-              <NButton v-if="freeChapterList.length > 0" class="ml-2" strong secondary type="primary" @click="menuToStudyPage()">
+              <NButton
+                v-if="freeChapterList.length > 0" class="ml-2" strong secondary type="primary"
+                @click="menuToStudyPage()"
+              >
                 免费试看
               </NButton>
             </template>
@@ -161,7 +191,7 @@ const menuType = computed(() => type === 'book' ? data.value.book_details : data
             <div class="border-b border-solid border-gray-200 border-0">
               <UiTab>
                 <UiTabItem
-                  v-for="item in tabMap" :key="item.value" :active="item.value === activeTab"
+                  v-for=" item in tabMap " :key="item.value" :active="item.value === activeTab"
                   @click="handleChangeType(item.value)"
                 >
                   {{ item.label }}
@@ -173,7 +203,7 @@ const menuType = computed(() => type === 'book' ? data.value.book_details : data
             <DetailMenuList v-else>
               <template v-if="menuType.length > 0">
                 <DetailMenu
-                  v-for="(item, index) in menuType" :key="item.id" :menu-data="item" :index="index"
+                  v-for="(item, index) in menuType " :key="item.id" :menu-data="item" :index="index"
                   @click="menuToStudyPage(item)"
                 />
               </template>
