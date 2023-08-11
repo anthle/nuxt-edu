@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@css-render/vue3-ssr": "^0.15.12",
+    "aplayer": "^1.10.1",
     "naive-ui": "^2.34.4",
     "normalize.css": "^8.0.1",
     "sass": "^1.64.1"
