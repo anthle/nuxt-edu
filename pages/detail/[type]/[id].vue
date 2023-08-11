@@ -125,6 +125,8 @@ function initHeader() {
       }],
       script: [{
         src: '/aplayer/APlayer.min.js',
+      }, {
+        src: '//unpkg.byted-static.com/xgplayer/2.31.2/browser/index.js',
       }],
     })
   }
@@ -136,9 +138,14 @@ function initHeader() {
     <section v-if="data.isbuy && (data.type !== 'media' && type === 'course')" class="py-4">
       <ClientOnly>
         <template #fallback>
-          <LoadingAudioSkeleton />
+          <LoadingAudioSkeleton v-if="data.type === 'audio'" />
+          <LoadingSkeleton v-else />
         </template>
+
+        <!-- 音频播放器 -->
         <PlayerAudio v-if="data.type === 'audio'" :title="data.title" :cover="data.cover" :url="data.content" />
+        <!-- 视频播放器 -->
+        <PlayerVideo v-if="data.type === 'video'" :url="data.content" />
       </ClientOnly>
     </section>
     <section v-else class="mt-5 bg-white border flex p-5 mb-5 rounded">
