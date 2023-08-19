@@ -2,7 +2,7 @@
 import { NButton, createDiscreteApi } from 'naive-ui'
 
 const props = defineProps<{
-  isCollection: boolean
+  isCollection?: boolean
   goods_id: number
   contentType: string
 }>()

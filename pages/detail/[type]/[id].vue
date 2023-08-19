@@ -130,12 +130,24 @@ function initHeader() {
       }],
     })
   }
+
+  if (type === 'live') {
+    useHead({
+      script: [{
+        src: '/aplayer/APlayer.min.js',
+      }, {
+        src: '//unpkg.byted-static.com/xgplayer/2.31.2/browser/index.js',
+      }, {
+        src: '//unpkg.byted-static.com/xgplayer-flv/2.5.1/dist/index.min.js',
+      }],
+    })
+  }
 }
 </script>
 
 <template>
   <LoadingGroup :pending="pending" :error="error">
-    <section v-if="data.isbuy && (data.type !== 'media' && type === 'course')" class="py-4">
+    <section v-if="data.isbuy && (data.type !== 'media' && type === 'course') || type === 'live'" class="py-4">
       <ClientOnly>
         <template #fallback>
           <LoadingAudioSkeleton v-if="data.type === 'audio'" />
@@ -146,17 +158,16 @@ function initHeader() {
         <PlayerAudio v-if="data.type === 'audio'" :title="data.title" :cover="data.cover" :url="data.content" />
         <!-- 视频播放器 -->
         <PlayerVideo v-if="data.type === 'video'" :url="data.content" />
+        <!-- 直播播放器 -->
+        <PlayerLive v-if="data.type === 'live'" :url="data.playUrl" />
       </ClientOnly>
     </section>
     <section v-else class="mt-5 bg-white border flex p-5 mb-5 rounded">
-      <NImage :src="data.cover" object-fit="cover" :class="isBookStyle" />
+      <NImage :src="data.cover" object-fit="cover" :class="isBookStyle" :width="type === 'book' ? '130' : '340'" />
       <div class="flex flex-col justify-start ml-5 p-2">
         <div class="text-xl flex items-center">
           {{ data.title }}
-          <CollectionBtn
-            class="ml-2" :is-collection="data.isfava" :goods_id="data.id"
-            :content-type="type as string"
-          />
+          <CollectionBtn class="ml-2" :is-collection="data.isfava" :goods_id="data.id" :content-type="type as string" />
         </div>
         <p class="text-xs text-gray-400">
           {{ subTitle }}
@@ -165,8 +176,11 @@ function initHeader() {
           <Price :price="data.price" class="text-xl" />
           <Price :price="data.t_price" through class="text-xs" />
         </div>
-        <div class="my-2">
+        <div v-if="type !== 'live'" class="my-2">
           <CouponModal />
+        </div>
+        <div v-else class="my-2">
+          <LiveStatusBar :start-time="data.start_time" :end-time="data.end_time" />
         </div>
         <div v-if="!data.isbuy" class="mt-auto">
           <template v-if="type === 'book'">
